@@ -10,16 +10,11 @@
 -- See also: http://computercraft.info/wiki/Turtle_(API)
 
 t = {}
-
-t.metatable = {}
-t.metatable.__index = function(_,key)
-  return turtle[key]
-end
-
+t_mt = { __index = turtle }
 
 -- This is where the magic happens. Any functions not available in `t`
 -- will be delegated to `turtle`.
-setmetatable(t, t.metatable)
+setmetatable(t, t_mt)
 
 
 -- Interaction
