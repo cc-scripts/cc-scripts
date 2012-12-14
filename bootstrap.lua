@@ -32,16 +32,16 @@ apis = {
 programs = {}
 
 -- Clear the screen and reset the cursor position
-function next()
+function nextScreen()
   term.clear()
   term.setCursorPos(1,1)
 end
 
 -- Splash screen
-next()
+nextScreen()
 textutils.slowPrint("cc-scripts installer has been initialized!")
 sleep(1)
-next()
+nextScreen()
 
 -- Show the user what's going to be installed
 textutils.slowPrint("The following items will be installed:")
@@ -60,7 +60,7 @@ textutils.slowPrint("Type 'yes' and hit return to continue,")
 textutils.slowPrint("enter anything else to abort:")
 
 if read() ~= "yes" then
-  next()
+  nextScreen()
   textutils.slowPrint("You have exited the cc-scripts installer!")
   print()
   print("You can run the installer again from")
@@ -99,7 +99,7 @@ function install(path)
   end
 end
 
-next()
+nextScreen()
 print("Starting installation...")
 print()
 -- Install all our APIs
