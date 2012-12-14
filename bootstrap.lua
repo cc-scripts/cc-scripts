@@ -22,7 +22,9 @@ apis = {
   "funct"
 }
 
-programs = {}
+programs = {
+  "startup"
+}
 
 -- Clear the screen and reset the cursor position
 function nextScreen()
@@ -109,3 +111,7 @@ end
 
 print()
 print("Installation completed! Enjoy cc-scripts!")
+print()
+print("If you'd like to be able to automatically load cc-scripts")
+print("whenever you use your in-game computer, just copy /cc-scripts/programs/startup to /startup")
+print("and you'll be good to go!")
