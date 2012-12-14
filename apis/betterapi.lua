@@ -9,7 +9,6 @@ this work (including it in the api itself is too late).
 
 This should maybe be added in a startup script or something.
 ]]
-the 
 LOADING = {}
 _G.apis = {}
 function os.loadAPI(_sPath)
