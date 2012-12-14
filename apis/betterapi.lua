@@ -12,8 +12,8 @@ This should maybe be added in a startup script or something.
 LOADING = {}
 _G.apis = {}
 function os.loadAPI(_sPath)
-  -- load the name
-	local sName = fs.getName(_sPath)
+	-- load the name, without file extension
+	local sName = fs.getName(_sPath):gsub('%.%w+', '')
 	if _G.apis[sName] == LOADING then
 		printError("API "..sName.." is currently loading")
 		return false
@@ -48,3 +48,7 @@ function os.unloadAPI(_sName)
 		_G.apis[_sName] = nil
 	end
 end
+
+os.loadAPI('apis/t.lua')
+
+fs.open('apis/t.lua', 'r')
