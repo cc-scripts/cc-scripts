@@ -8,9 +8,7 @@ Installation
 
 0. Open the Lua interpreter on your in-game lua computer: `lua`
 0. Enter the following snippet to download the installation:
-  ```lua
-  loadstring(http.get("http://raw.github.com/damien/cc-scripts/master/bootstrap.lua"))()
-  ```
+  `loadstring(http.get("http://raw.github.com/damien/cc-scripts/master/bootstrap.lua"))()`
 0. Follow the instructions given by the installer and you should be good to go!
 
 Issues
