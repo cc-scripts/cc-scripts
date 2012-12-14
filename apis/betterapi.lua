@@ -14,6 +14,8 @@ _G.apis = {}
 function os.loadAPI(_sPath, force)
 	-- load the name, without file extension
 	local sName = fs.getName(_sPath):gsub('%.%w+', '')
+
+	-- check for conflicts
 	if _G.apis[sName] == LOADING then
 		printError("API "..sName.." is currently loading")
 		if not force then return false end
@@ -39,14 +41,22 @@ function os.loadAPI(_sPath, force)
 		end,
 		__newindex = tAPI
 	})
+	-- Try loading the file
 	local fnAPI, err = loadfile(_sPath)
-	if fnAPI then
-		setfenv(fnAPI, tEnv)()
-	else
+	if not fnAPI then
 		printError(err)
+		_G.apis[sName] = nil
 		return false
 	end
 	
+	-- Try running the module
+	local ok, err = pcall(setfenv(fnAPI, tEnv))
+	if not ok then
+		printError(err)
+		_G.apis[sName] = nil
+		return false
+	end
+
 	-- put it in the apis table for easy iteration
 	_G[sName] = tAPI
 	_G.apis[sName] = tAPI
