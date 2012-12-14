@@ -11,9 +11,15 @@
 
 t = {}
 
+t.metatable = {}
+t.metatable.__index = function(_,key)
+  return turtle[key]
+end
+
+
 -- This is where the magic happens. Any functions not available in `t`
 -- will be delegated to `turtle`.
-t.setmetatable(__index, turtle)
+setmetatable(t, t.metatable)
 
 
 -- Interaction
