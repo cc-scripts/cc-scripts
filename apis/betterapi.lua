@@ -11,28 +11,39 @@ This should maybe be added in a startup script or something.
 ]]
 LOADING = {}
 _G.apis = {}
-function os.loadAPI(_sPath)
+function os.loadAPI(_sPath, force)
 	-- load the name, without file extension
 	local sName = fs.getName(_sPath):gsub('%.%w+', '')
 	if _G.apis[sName] == LOADING then
 		printError("API "..sName.." is currently loading")
-		return false
+		if not force then return false end
 	elseif _G.apis[sName] then
 		printError("API "..sName.." is already loaded")
-		return false
+		if not force then return false end
 	end
 
 	-- mark it as loading using our sentinel value
 	_G.apis[sName] = LOADING
 		
 	-- set up a function environment with access to _G
-	local tAPI = setmetatable({}, { __index = _G })
+	local tAPI = {}
+	local tEnv = setmetatable({}, {
+		__index = function(_, k, v)
+			if k == "module" then
+				return tAPI
+			elseif tAPI[k] ~= nil then
+				return tAPI[k]
+			else
+				return _G[k]
+			end
+		end,
+		__newindex = tAPI
+	})
 	local fnAPI, err = loadfile(_sPath)
 	if fnAPI then
-		setfenv(fnAPI, tAPI)()
+		setfenv(fnAPI, tEnv)()
 	else
 		printError(err)
-		tAPIsLoading[sName] = nil
 		return false
 	end
 	
@@ -48,7 +59,3 @@ function os.unloadAPI(_sName)
 		_G.apis[_sName] = nil
 	end
 end
-
-os.loadAPI('apis/t.lua')
-
-fs.open('apis/t.lua', 'r')
