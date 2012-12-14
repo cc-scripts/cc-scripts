@@ -98,7 +98,7 @@ print()
 -- Install all our APIs
 fs.makeDir("/cc-scripts/apis")
 for i = 1, #apis do
-  install("api/"..apis[i])
+  install("apis/"..apis[i])
 end
 
 -- Install all of our programs
