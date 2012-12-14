@@ -40,12 +40,12 @@ nextScreen()
 
 -- Show the user what's going to be installed
 textutils.slowPrint("The following items will be installed:")
-for i = 1, #apis do
-  print("/cc-scripts/apis/", apis[i])
+for _, api in ipairs(apis) do
+  print("/cc-scripts/apis/"..api)
 end
 
-for i = 1, #programs do
-  print("/cc-scripts/programs/", programs[i])
+for _, program in ipairs(programs) do
+  print("/cc-scripts/programs/"..program)
 end
 
 -- Give the user the option to opt-out before we start
