@@ -2,26 +2,19 @@
 -- Source: /cc-scripts/bootstrap.lua
 -- The cc-scripts installer.
 
--- If we're running within the lua program, prompt the user
--- to run the bootsrap program directly and exit the current
--- lua instance
-if type(exit) == "function" then
-  -- First thing's first: save the installer to root of the current
-  -- computer. We want the user to be able to resume this process
-  -- if the install fails.
-  fs.makeDir("/cc-scripts")
-  bootstrap = fs.open("/cc-scripts/bootstrap", "w")
-  bootstrapConnection = http.get("https://raw.github.com/damien/cc-scripts/master/bootstrap.lua")
+-- First thing's first: save the installer to root of the current
+-- computer. We want the user to be able to resume this process
+-- if the install fails.
+fs.makeDir("/cc-scripts")
+bootstrap = fs.open("/cc-scripts/bootstrap", "w")
+bootstrapConnection = http.get("https://raw.github.com/damien/cc-scripts/master/bootstrap.lua")
 
-  assert(bootstrap, "Unable to save installer to disk! Please make sure your in-game computer has space available and try again!")
-  assert(bootstrapConnection, "Unable to download installer components! Is your internet working? See if you can access https://raw.github.com/damien/cc-scripts/master/bootstrap.lua")
+assert(bootstrap, "Unable to save installer to disk! Please make sure your in-game computer has space available and try again!")
+assert(bootstrapConnection, "Unable to download installer components! Is your internet working? See if you can access https://raw.github.com/damien/cc-scripts/master/bootstrap.lua")
 
-  bootstrap.write(bootstrapConnection.readAll())
-  bootstrapConnection.close()
-  bootstrap.close()
-
-  print("You have successfully downloaded the installer!")
-end
+bootstrap.write(bootstrapConnection.readAll())
+bootstrapConnection.close()
+bootstrap.close()
 
 -- A manifest of all the APIs and programs the installer will include
 -- by default.
