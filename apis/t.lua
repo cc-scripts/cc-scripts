@@ -10,7 +10,15 @@
 -- See also: http://computercraft.info/wiki/Turtle_(API)
 
 t = {}
-t_mt = { __index = turtle }
+t_mt = {}
+
+t_mt.__index = function(table, key)
+  if table[key] then
+    return table[key]
+  else
+    return turtle[key]
+  end
+end
 
 -- This is where the magic happens. Any functions not available in `t`
 -- will be delegated to `turtle`.
@@ -72,11 +80,7 @@ end
 --    to it's intended destination.
 
 function t.forward(distance)
-  if distance then
-    assert(type(distance) == "number", "t.forward only accepts numbers")
-  else
-    distance = 1
-  end
+  distance = tonumber(distance) or 1
 
   local moved = false
 
@@ -92,15 +96,13 @@ function t.forward(distance)
 end
 
 function t.backward(distance)
+  distance = tonumber(distance) or 1
   t.reverse()
+  t.forward(distance)
 end
 
-function t.turnRight(times)
-  if times then
-    assert(type(times) == "number", "t.turnRight only accepts numbers")
-  else
-    times = 1
-  end
+function t.turnRight(number)
+  local times = tonumber(number) or 1
 
   for i = 1, times do
     turtle.turnRight()
@@ -109,12 +111,8 @@ function t.turnRight(times)
   return true
 end
 
-function t.turnLeft(times)
-  if times then
-    assert(type(times) == "number", "t.turnRight only accepts numbers")
-  else
-    times = 1
-  end
+function t.turnLeft(number)
+  times = tonumber(number) or 1
 
   for i = 1, times do
     turtle.turnLeft()
@@ -124,7 +122,7 @@ function t.turnLeft(times)
 end
 
 function t.reverse()
-  if math.random(0,1) > 0 then
+  if math.random(0,1) == 0 then
     t.turnLeft(2)
   else
     t.turnRight(2)
