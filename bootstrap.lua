@@ -19,11 +19,18 @@ bootstrap.close()
 -- A manifest of all the APIs and programs the installer will include
 -- by default.
 apis = {
-  "funct"
+  "betterapi",
+  "funct",
+  "turtletracker",
+  "direction"
 }
 
 programs = {
-  "startup"
+  "startup",
+  "move",
+  "dig",
+  "position",
+  "direction"
 }
 
 -- Clear the screen and reset the cursor position
