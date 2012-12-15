@@ -48,7 +48,3 @@ function os.unloadAPI(_sName)
 		_G.apis[_sName] = nil
 	end
 end
-
-os.loadAPI('apis/t.lua')
-
-fs.open('apis/t.lua', 'r')
