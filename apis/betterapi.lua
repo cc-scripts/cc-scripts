@@ -11,9 +11,11 @@ This should maybe be added in a startup script or something.
 ]]
 LOADING = {}
 _G.apis = {}
+
 function os.loadAPI(_sPath)
 	-- load the name, without file extension
 	local sName = fs.getName(_sPath):gsub('%.%w+', '')
+
 	if _G.apis[sName] == LOADING then
 		printError("API "..sName.." is currently loading")
 		return false
@@ -28,6 +30,7 @@ function os.loadAPI(_sPath)
 	-- set up a function environment with access to _G
 	local tAPI = setmetatable({}, { __index = _G })
 	local fnAPI, err = loadfile(_sPath)
+
 	if fnAPI then
 		setfenv(fnAPI, tAPI)()
 	else
@@ -39,6 +42,7 @@ function os.loadAPI(_sPath)
 	-- put it in the apis table for easy iteration
 	_G[sName] = tAPI
 	_G.apis[sName] = tAPI
+
 	return true
 end
 
