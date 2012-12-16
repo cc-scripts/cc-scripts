@@ -49,7 +49,7 @@ function chopTree()
   turtle.forward()
   
   -- Dig up the trunk of the tree
-  turtle.select(1)  
+  turtle.select(2)
   while turtle.compareUp() do
     turtle.digUp()
     turtle.up()
