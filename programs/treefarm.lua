@@ -72,7 +72,7 @@ while true do
   print("To exit, press and hold CTRL+T")
 
   -- Wait for a sapling to grow
-  turtle.select(1)
+  turtle.select(2)
   while not turtle.compare()
     do sleep(1)
   end
@@ -81,6 +81,6 @@ while true do
   refuelAt(500)
 
   -- Plant the next sapling to harvest
-  turtle.select(2)
+  turtle.select(1)
   turtle.place()
 end
