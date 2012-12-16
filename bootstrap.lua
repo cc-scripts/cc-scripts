@@ -20,17 +20,18 @@ bootstrap.close()
 -- by default.
 apis = {
   "betterapi",
+  "direction",
   "funct",
-  "turtletracker",
-  "direction"
+  "turtletracker"
 }
 
 programs = {
-  "startup",
-  "move",
   "dig",
+  "direction",
+  "move",
   "position",
-  "direction"
+  "startup",
+  "treefarm"
 }
 
 -- Clear the screen and reset the cursor position
