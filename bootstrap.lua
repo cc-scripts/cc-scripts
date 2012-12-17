@@ -28,6 +28,7 @@ apis = {
 programs = {
   "dig",
   "direction",
+  "floor",
   "move",
   "position",
   "startup",
