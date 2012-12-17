@@ -13,6 +13,8 @@ function forward()
     turtle.dig()
     sleep(0.5)
   end
+  
+  turtle.forward()
 end
 
 function placeRow(length)
