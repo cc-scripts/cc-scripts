@@ -31,6 +31,7 @@ programs = {
   "floor",
   "move",
   "position",
+  "shaft",
   "startup",
   "treefarm"
 }
