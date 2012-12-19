@@ -30,6 +30,7 @@ programs = {
   "direction",
   "floor",
   "move",
+  "room",
   "position",
   "shaft",
   "startup",
