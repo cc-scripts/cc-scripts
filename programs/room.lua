@@ -124,7 +124,7 @@ function tunnel(...)
 
   for _ = 1, nDistance do
     -- if there is a block in direction we're going
-    if detect(direction) then
+    if detect(sDirection) then
       -- attempt to break the block, throw an error
       -- if we fail
       if fDig() == false then
@@ -141,7 +141,7 @@ function tunnel(...)
     sleep(0.5)
 
     -- If something fell in our way...
-    while detect(direction) do
+    while detect(sDirection) do
       -- keep digging until the way is clear.
       fDig()
       -- Give blocks time to fall before we continue
@@ -149,7 +149,8 @@ function tunnel(...)
     end
 
     -- Move into the (hopefully) space we cleared
-    if tMoveDirections[direction]() then
+    local fMove = tMoveDirections[sDirection]
+    if fMove() then
       bSuccess = true
     else
       bSuccess = false
