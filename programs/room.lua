@@ -25,7 +25,7 @@ local nHeight = tonumber( tArgs[3] )
 --   detect("invalid") --> error
 function detect(direction)
   local tDetectDirections = {
-    forward = turtle.detectUp,
+    forward = turtle.detect,
     down    = turtle.detectDown,
     up      = turtle.detectUp
   }
