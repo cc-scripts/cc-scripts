@@ -142,9 +142,8 @@ function dig(...)
       sleep(0.5)
     end
 
-      -- Nothing there, we have succeeded!
-      bSuccess = true
-    end
+    -- Nothing there, we have succeeded!
+    bSuccess = true
   end
 
   return bSuccess
