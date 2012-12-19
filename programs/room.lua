@@ -135,17 +135,12 @@ function dig(...)
     sleep(0.5)
 
     -- If something fell in our way...
-    if detect(direction) then
+    while detect(direction) do
       -- keep digging until the way is clear.
-      while detect(direction) do
-        -- Account for un-diggable blocks
-        if not dig(direction) then
-          error("Encountered an un-diggable block")
-        end
-
-        -- Give blocks time to fall before we continue
-        sleep(0.5)
-      end
+      fDig()
+      -- Give blocks time to fall before we continue
+      sleep(0.5)
+    end
 
       -- Nothing there, we have succeeded!
       bSuccess = true
