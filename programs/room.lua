@@ -174,7 +174,7 @@ for height = 1, nHeight do
     -- Get in position to dig out next column
     if width ~= nWidth then
       -- Move in a zig-zag patter while digging
-      if width % 2 == 0 then
+      if width % 2 == 1 then
         turtle.turnRight()
         tunnel()
         turtle.turnRight()
@@ -187,9 +187,11 @@ for height = 1, nHeight do
   end -- width
 
   -- Move up to next level
-  tunnel("up")
-  turtle.turnRight()
-  turtle.turnRight()
+  if height ~= nHeight then
+    tunnel("up")
+    turtle.turnRight()
+    turtle.turnRight()
+  end
 end -- height
 
 print("Finished digging out ", nLength, "x", nWidth, "x", nHeight, " room.")
