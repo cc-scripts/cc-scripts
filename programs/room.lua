@@ -31,6 +31,13 @@ function forward()
   end
 end
 
+function up()
+  if not turtle.up() then
+    digUp()
+    turtle.up()
+  end
+end
+
 function digRow(rowLength, digAbove)
   digAbove = digAbove or false
   
@@ -60,30 +67,29 @@ function digLevel(desiredHeight, currentHeight)
       -- Position the turtle in the next column,
       -- moving it in a zig-zag pattern as we dig
       -- out the full width of the room
-      if i == 1 then
-        -- If we're digging out an even number of floors,
-        -- figure out if half of the current height is even;
-        -- otherwise we only care if the current height is even.
-        local even = false
+      -- 
+      -- If we're digging out an even number of floors,
+      -- figure out if half of the current height is even;
+      -- otherwise we only care if the current height is even.
+      local even = false
 
-        if desiredHeight % 2 == 0 then
-          even = ((desiredHeight / 2) % 2 == 0)
-        else
-          even = (i % 2 == 0)
-        end
+      if desiredHeight % 2 == 0 then
+        even = ((desiredHeight / 2) % 2 == 0)
+      else
+        even = (i % 2 == 0)
+      end
 
-        if even then
-          turtle.turnRight()
-          forward()
-          turtle.turnRight()
-        else
-          turtle.turnLeft()
-          forward()
-          turtle.turnLeft()
-        end
+      if even then
+        turtle.turnRight()
+        forward()
+        turtle.turnRight()
+      else
+        turtle.turnLeft()
+        forward()
+        turtle.turnLeft()
       end
       
-      -- dig out addional level if possible
+      -- Dig out an addional level if possible
       if (desiredHeight - currentHeight) == 0 then
         digRow(length - 1)
       else
