@@ -43,9 +43,9 @@ end
 function digLevel(desiredHeight, currentHeight)
    for i = 1, width do
     -- dig the full length on the first row of the first level
-    if i == 1 and j == 1 then
+    if i == 1 and currentHeight == 1 then
       -- dig out addiontal level if needed
-      if j < height then
+      if currentHeight < desiredHeight then
         digRow(length, true)
       else
         digRow(length)
@@ -64,8 +64,8 @@ function digLevel(desiredHeight, currentHeight)
       -- figure out if half of the current height is even;
       -- otherwise we only care if the current height is even.
       local even = false
-      if height % 2 == 0 then
-        even = ((height / 2) % 2 == 0)
+      if desiredHeight % 2 == 0 then
+        even = ((desiredHeight / 2) % 2 == 0)
       else
         even = (i % 2 == 0)
       end
@@ -81,7 +81,7 @@ function digLevel(desiredHeight, currentHeight)
       end
       
       -- dig out addional level if possible
-      if j < height then
+      if currentHeight < desiredHeight then
         digRow(length - 1, true)
       else
         digRow(length - 1)
