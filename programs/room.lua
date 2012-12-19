@@ -40,7 +40,7 @@ end
 
 function digRow(rowLength, digAbove)
   digAbove = digAbove or false
-  
+
   for i = 1, rowLength do
     dig()
     forward()
@@ -58,7 +58,7 @@ function digLevel(desiredHeight, currentHeight)
       else
         digRow(length, true)
       end
-      
+
     -- skip the first block of each lengthwise column on
     -- all subsequent columns; in these instances the
     -- turtle is already positioned at the first block
@@ -88,7 +88,7 @@ function digLevel(desiredHeight, currentHeight)
         forward()
         turtle.turnLeft()
       end
-      
+
       -- Dig out an addional level if possible
       if (desiredHeight - currentHeight) == 0 then
         digRow(length - 1)
@@ -102,14 +102,17 @@ end
 for j = 1, height do
   digLevel(height, j)
 
-  -- Position turtle to dig out next level
-  turtle.turnRight()
-  turtle.turnRight()
-  up()
+  -- Position turtle to dig out next level,
+  -- but only if there are more levels to dig
+  if (height - j) ~= 0 then
+    turtle.turnRight()
+    turtle.turnRight()
+    up()
 
-  -- Go up two levels if we
-  -- haven't hit the ceiling
-  if height - j ~= 0 then up() end
+    -- Go up two levels if we
+    -- haven't hit the ceiling
+    if height - j - 1 ~= 0 then up() end
+  end
 end -- height
 
 print("Done!")
