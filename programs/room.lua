@@ -159,3 +159,37 @@ function tunnel(...)
 
   return bSuccess
 end
+
+-- Dig out a room
+tunnel()
+tunnel("up", nHeight)
+for height = 1, nHeight do
+  for width = 1, nWidth do
+    if (height == 1) and (width == 1) then
+      tunnel(nLength)
+    else
+      tunnel(nLength - 1)
+    end
+
+    -- Get in position to dig out next column
+    if width ~= nWidth then
+      -- Move in a zig-zag patter while digging
+      if width % 2 == 0 then
+        turtle.turnRight()
+        tunnel()
+        turtle.turnRight()
+      else
+        turtle.turnLeft()
+        tunnel()
+        turtle.turnLeft()
+      end
+    end
+  end -- width
+
+  -- Move up to next level
+  tunnel("up")
+  turtle.turnRight()
+  turtle.turnRight()
+end -- height
+
+print("Finished digging out ", nLength, "x", nWidth, "x", nHeight, " room.")
