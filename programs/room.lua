@@ -101,7 +101,7 @@ function dig(...)
   end
 
   -- Ensure we have a valid distance
-  if not nDistance > 0 then
+  if not (nDistance > 0) then
     error("Invalid distance passed to dig(), distance must be a number greater than 0")
   end
 
@@ -119,14 +119,13 @@ function dig(...)
   for _ = 1, nDistance do
     -- if there is a block in direction we're going
     if detect(direction) then
-      -- attempt to break the block
-      bSuccess = fDig()
-    end
-
-    -- We ran into something we can't dig, possibly
-    -- bedrock, a protected block, or a mod block.
-    if bSuccess == false then
-      error("Encountered an un-diggable block")
+      -- attempt to break the block, throw an error
+      -- if we fail
+      if fDig() == false then
+        -- We ran into something we can't dig, possibly
+        -- bedrock, a protected block, or a mod block.
+        error("Encountered an un-diggable block")
+      end
     end
 
     -- Wait a bit to see if digging caused blocks
