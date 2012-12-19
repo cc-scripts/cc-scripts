@@ -43,7 +43,7 @@ function detect(direction)
   return fDetect()
 end
 
--- Digs a number of blocks in the provided direction.
+-- Tunnel a number of blocks in the provided direction.
 --
 -- Valid directions are "forward", "down", or "up".
 -- Providing no direction will default to the direction "forward".
@@ -62,12 +62,12 @@ end
 --
 -- Examples:
 --
---   dig()          --> dig forward one block
---   dig(3)         --> dig forward three blocks
---   dig("up")      --> dig up one block
---   dig("down", 3) --> dig down three blocks
---   dig(5, "up")   --> dig up five blocks
-function dig(...)
+--   tunnel()          --> dig forward one block
+--   tunnel(3)         --> dig forward three blocks
+--   tunnel("up")      --> dig up one block
+--   tunnel("down", 3) --> dig down three blocks
+--   tunnel(5, "up")   --> dig up five blocks
+function tunnel(...)
   local tArgs = {...}
 
   if #tArgs > 2 then
@@ -78,6 +78,12 @@ function dig(...)
     forward = turtle.dig,
     down    = turtle.digDown,
     up      = turtle.digUp
+  }
+
+  local tMoveDirections = {
+    forward = turtle.forward,
+    down    = turtle.down,
+    up      = turtle.up
   }
 
   -- Determine if we were provided a distance,
@@ -142,8 +148,12 @@ function dig(...)
       sleep(0.5)
     end
 
-    -- Nothing there, we have succeeded!
-    bSuccess = true
+    -- Move into the (hopefully) space we cleared
+    if tMoveDirections[direction]() then
+      bSuccess = true
+    else
+      bSuccess = false
+    end
   end
 
   return bSuccess
