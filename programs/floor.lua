@@ -14,7 +14,11 @@ function forward()
     sleep(0.5)
   end
   
-  turtle.forward()
+  if not turtle.forward() then
+    while not turtle.forward() do
+      sleep(1)
+    end
+  end
 end
 
 -- Places a block from the provided slot beneath the turtle,
