@@ -19,6 +19,7 @@ bootstrap.close()
 -- A manifest of all the APIs and programs the installer will include
 -- by default.
 apis = {
+  "cc_scripts",
   "betterapi",
   "direction",
   "funct",
@@ -142,5 +143,3 @@ print()
 print("Your computer will reboot in 3 seconds!")
 sleep(3)
 os.reboot()
-
-
