@@ -92,7 +92,7 @@ if subCommand == "update" then
 end
 
 if subCommand == "install" then
-  if #subCommandArgs > 1 then
+  if #subCommandArgs > 2 then
     print("You may only install one item at a time.")
     return
   end
