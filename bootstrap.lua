@@ -53,14 +53,7 @@ sleep(1)
 nextScreen()
 
 -- Show the user what's going to be installed
-print("The following items will be installed:")
-for _, api in ipairs(apis) do
-  print("/cc-scripts/apis/"..api)
-end
-
-for _, program in ipairs(programs) do
-  print("/cc-scripts/programs/"..program)
-end
+print("A total of " .. #apis .. " apis and " .. #programs .. " programs will be installed.")
 
 -- Give the user the option to opt-out before we start
 -- installing stuff
