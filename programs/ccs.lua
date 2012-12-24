@@ -34,9 +34,9 @@ function update(updateArguments)
   local path = ""
 
   if updateArguments[1] == "api" then
-    path = "/cc-scripts/apis/"
+    path = "apis/"
   elseif updateArguments[1] == "program" then
-    path = "/cc-scripts/programs/"
+    path = "programs/"
   end
 
   -- Update each named api or program
@@ -52,11 +52,11 @@ function updateAll()
   local programs = fs.list("/cc-scripts/programs")
 
   for _, api in ipairs(apis) do
-    install("/cc-scripts/apis/" .. api, true)
+    install("apis/" .. api, true)
   end
 
   for _, program in ipairs(programs) do
-    install("/cc-scripts/programs/" .. program, true)
+    install("programs/" .. program, true)
   end
 
   print("Updated all programs and apis")
