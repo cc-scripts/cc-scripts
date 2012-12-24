@@ -20,21 +20,13 @@ bootstrap.close()
 -- by default.
 apis = {
   "cc_scripts",
-  "betterapi",
-  "direction",
-  "funct",
-  "installer",
-  "turtletracker"
+  "installer"
 }
 
 programs = {
   "ccs",
-  "dig",
-  "direction",
   "floor",
-  "move",
   "room",
-  "position",
   "shaft",
   "startup",
   "treefarm"
