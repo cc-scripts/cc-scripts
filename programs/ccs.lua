@@ -11,6 +11,12 @@ if #tArgs == 0 then
   print("Usage: ccs update [[api|program] NAME]")
   print()
   print("Examples:")
+  print("  Install a program from cc-scripts:")
+  print("    ccs install program room")
+  print()
+  print("  Install an api from cc-scripts:")
+  print("    ccs install api turtletracker")
+  print()
   print("  Update all programs and apis:")
   print("    ccs update")
   print()
@@ -82,5 +88,25 @@ if subCommand == "update" then
     updateAll()
   else
     update(subCommandArgs)
+  end
+end
+
+if subCommand == "install" then
+  if #subCommandArgs > 1 then
+    print("You may only install one item at a time.")
+    return
+  end
+
+  if subCommandArgs[1] == "api" then
+    local path = "apis/"
+  elseif subCommandArgs[1] == "program" then
+    local path = "programs/"
+  end
+
+  if install(path .. subCommandArgs[2]) then
+    print("Successfully installed " .. subCommandArgs[2] .. " " .. subCommandArgs[1])
+  else
+    print(subCommandArgs[2] .. " " .. subCommandArgs[1] .. " is already installed!")
+    print("Try running: ccs update " .. subCommandArgs[1] .. subCommandArgs[2])
   end
 end
