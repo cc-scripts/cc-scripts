@@ -2,7 +2,7 @@
 -- Source: /cc-scripts/programs/ccs.lua
 -- A script to manage cc-script packages.
 
-os.loadAPI("installer")
+cc_scripts.loadAPI("installer")
 assert(installer, "Unable to load installer")
 
 local tArgs = { ... }
