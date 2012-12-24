@@ -23,6 +23,7 @@ apis = {
   "betterapi",
   "direction",
   "funct",
+  "installer",
   "turtletracker"
 }
 
