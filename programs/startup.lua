@@ -6,10 +6,13 @@
 -- a program name into your in-game computer
 --
 -- See also: http://en.wikipedia.org/wiki/Path_(computing)
-pathsToLoad = {
+local pathsToLoad = {
   "/cc-scripts/apis",
   "/cc-scripts/programs"
 }
 
-path = shell.path()
+local path = shell.path()
 shell.setPath(path .. ":/cc-scripts/apis:/cc-scripts/programs")
+
+-- Print the version of cc-scripts in use on startup
+print("cc-scripts v" .. cc_scripts.versionString())
