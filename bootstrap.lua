@@ -45,12 +45,12 @@ end
 
 -- Splash screen
 nextScreen()
-textutils.slowPrint("cc-scripts installer has been initialized!")
+print("cc-scripts installer has been initialized!")
 sleep(1)
 nextScreen()
 
 -- Show the user what's going to be installed
-textutils.slowPrint("The following items will be installed:")
+print("The following items will be installed:")
 for _, api in ipairs(apis) do
   print("/cc-scripts/apis/"..api)
 end
@@ -62,12 +62,12 @@ end
 -- Give the user the option to opt-out before we start
 -- installing stuff
 print()
-textutils.slowPrint("Type 'yes' and hit return to continue,")
-textutils.slowPrint("enter anything else to abort:")
+print("Type 'yes' and hit return to continue,")
+print("enter anything else to abort:")
 
 if read() ~= "yes" then
   nextScreen()
-  textutils.slowPrint("You have exited the cc-scripts installer!")
+  print("You have exited the cc-scripts installer!")
   print()
   print("You can run the installer again from")
   print("/cc-scripts/bootstrap")
@@ -105,6 +105,17 @@ function install(path)
   end
 end
 
+function configureStartup()
+  local hadStartup = fs.exists("/startup")
+
+  -- Clobber any previous startup script
+  if hadStartup then
+    fs.delete("/startup")
+  end
+
+  fs.copy("/cc-scripts/programs/startup", "/startup")
+end
+
 nextScreen()
 print("Starting installation...")
 print()
@@ -120,9 +131,16 @@ for i = 1, #programs do
   install("programs/"..programs[i])
 end
 
+-- Install the startup script, this ensures that
+-- all the newly installed scripts and apis are
+-- immidiately available
+configureStartup()
+
 print()
 print("Installation completed! Enjoy cc-scripts!")
 print()
-print("If you'd like to be able to automatically load cc-scripts")
-print("whenever you use your in-game computer, just copy /cc-scripts/programs/startup to /startup")
-print("and you'll be good to go!")
+print("Your computer will reboot in 3 seconds!")
+sleep(3)
+os.reboot()
+
+
