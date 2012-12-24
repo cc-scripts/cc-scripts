@@ -6,13 +6,8 @@
 -- a program name into your in-game computer
 --
 -- See also: http://en.wikipedia.org/wiki/Path_(computing)
-local pathsToLoad = {
-  "/cc-scripts/apis",
-  "/cc-scripts/programs"
-}
-
 local path = shell.path()
-shell.setPath(path .. ":/cc-scripts/apis:/cc-scripts/programs")
+shell.setPath(path .. ":/cc-scripts/programs")
 
 -- While we did set the load path, we can't take advantage of
 -- it while this file is being parsed, so we need to reference
