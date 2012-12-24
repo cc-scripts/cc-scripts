@@ -2,6 +2,22 @@
 -- Source: /cc-scripts/apis/installer.lua
 -- Description: An API for installing and updating files.
 
+-- The following are utility functions for use within this API;
+-- these functions are inaccessible outside of this file.
+
+-- Returns true if a string looks like a URL (starts with http:// or https://)
+local function isUrl(s)
+  if string.sub(s, 1, 7) == "http://" then
+    return true
+  elseif string.sub(s, 1, 8) == "https://" then
+    return true
+  else
+    return false
+  end
+end
+
+-- The following are functions exposed to the `installer` API:
+
 -- install
 --
 -- Take a file from `source` and copy it to `destination`.
@@ -61,18 +77,4 @@ function install(source, destination, force)
   conn.close()
 
   return true
-end
-
--- The following are utility functions for use within this API;
--- these functions are inaccessible outside of this file.
-
--- Returns true if a string looks like a URL (starts with http:// or https://)
-local function isUrl(s)
-  if string.sub(s, 1, 7) == "http://" then
-    return true
-  elseif string.sub(s, 1, 8) == "https://" then
-    return true
-  else
-    return false
-  end
 end
