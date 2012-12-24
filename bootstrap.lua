@@ -27,6 +27,7 @@ apis = {
 }
 
 programs = {
+  "ccs",
   "dig",
   "direction",
   "floor",
