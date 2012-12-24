@@ -102,6 +102,10 @@ if subCommand == "install" then
     path = "apis/"
   elseif subCommandArgs[1] == "program" then
     path = "programs/"
+  else
+    print("Invalid subcommand '" .. subCommandArgs[1] .. "'")
+    print("Valid subcommands are 'install' and 'update'")
+    return
   end
 
   if install(path .. subCommandArgs[2]) then
