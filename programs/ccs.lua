@@ -97,16 +97,17 @@ if subCommand == "install" then
     return
   end
 
+  local path = ""
   if subCommandArgs[1] == "api" then
-    local path = "apis/"
+    path = "apis/"
   elseif subCommandArgs[1] == "program" then
-    local path = "programs/"
+    path = "programs/"
   end
 
   if install(path .. subCommandArgs[2]) then
     print("Successfully installed " .. subCommandArgs[2] .. " " .. subCommandArgs[1])
   else
     print(subCommandArgs[2] .. " " .. subCommandArgs[1] .. " is already installed!")
-    print("Try running: ccs update " .. subCommandArgs[1] .. subCommandArgs[2])
+    print("Try running: ccs update " .. subCommandArgs[1] .. " " .. subCommandArgs[2])
   end
 end
