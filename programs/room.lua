@@ -162,26 +162,33 @@ end
 
 -- Dig out a room
 tunnel()
-tunnel("up", nHeight)
 for height = 1, nHeight do
   for width = 1, nWidth do
-    if (height == 1) and (width == 1) then
-      tunnel(nLength)
-    else
-      tunnel(nLength - 1)
-    end
+    tunnel(nLength - 1)
 
     -- Get in position to dig out next column
     if width ~= nWidth then
       -- Move in a zig-zag patter while digging
-      if width % 2 == 1 then
-        turtle.turnRight()
-        tunnel()
-        turtle.turnRight()
+      if height % 2 == 0 then
+        if width % 2 == 0 then
+          turtle.turnRight()
+          tunnel()
+          turtle.turnRight()
+        else
+          turtle.turnLeft()
+          tunnel()
+          turtle.turnLeft()
+        end
       else
-        turtle.turnLeft()
-        tunnel()
-        turtle.turnLeft()
+        if width % 2 == 0 then
+          turtle.turnLeft()
+          tunnel()
+          turtle.turnLeft()
+        else
+          turtle.turnRight()
+          tunnel()
+          turtle.turnRight()
+        end
       end
     end
   end -- width
