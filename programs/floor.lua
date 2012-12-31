@@ -17,10 +17,25 @@ function forward()
   turtle.forward()
 end
 
+function placeItemFromInventory()
+  for i = 1, 16 do
+    local itemCount = turtle.getItemCount(i)
+
+    if itemCount > 0 then
+      turtle.select(i)
+      turtle.placeDown()
+      return true
+    end
+  end
+
+  -- No items to place
+  return false
+end
+
 function placeRow(length)
   for i = 1, length do
     if turtle.detectDown() then turtle.digDown() end
-    turtle.placeDown()
+    placeItemFromInventory()
     if i ~= length then forward() end
   end
 end
