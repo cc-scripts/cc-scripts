@@ -14,28 +14,58 @@ function forward()
     sleep(0.5)
   end
   
-  turtle.forward()
+  if not turtle.forward() then
+    while not turtle.forward() do
+      sleep(1)
+    end
+  end
 end
 
-function placeItemFromInventory()
-  for i = 1, 16 do
-    local itemCount = turtle.getItemCount(i)
+-- Places a block from the provided slot beneath the turtle,
+-- but only if the block beneath the turtle is different than
+-- the block in slot 1 OR if the block below is empty (air or liquid).
+function placeIfDifferent(slot)
+  turtle.select(1)
+  if not turtle.compareDown() then
+    turtle.select(slot)
+    turtle.placeDown()
+  end
+end
 
-    if itemCount > 0 then
-      turtle.select(i)
-      turtle.placeDown()
+-- Find the first slot with the same block as
+-- the one found in slot one, then place it under
+-- the turtle. Always leaves at least one block in
+-- slot 1.
+--
+-- Returns true if the turtle couple place a similar block,
+-- returns false if there are no additional blocks identical
+-- to the block in slot 1 to place.
+function placeSimilarBlockFromInventory()
+  turtle.select(1)
+
+  -- Place excess blocks from slot 1
+  -- before using any other slots
+  if turtle.getItemCount(1) > 1 then
+    placeIfDifferent(1)
+    return true
+  end
+
+  -- Attempt to find similar blocks in other slots
+  for i = 2, 16 do
+    if turtle.compareTo(i) then
+      placeIfDifferent(i)
       return true
     end
   end
 
-  -- No items to place
+  -- If we've gotten this far, we're out of blocks to place
   return false
 end
 
 function placeRow(length)
   for i = 1, length do
     if turtle.detectDown() then turtle.digDown() end
-    placeItemFromInventory()
+    placeSimilarBlockFromInventory()
     if i ~= length then forward() end
   end
 end
@@ -55,5 +85,7 @@ for currentWidth = 1, width do
     end
   end
   
-  placeRow(length)
+  if placeRow(length) == false then
+    print("Ran out of blocks to place!")
+  end
 end

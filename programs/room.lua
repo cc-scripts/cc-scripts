@@ -107,7 +107,10 @@ function tunnel(...)
   end
 
   -- Ensure we have a valid distance
-  if not (nDistance > 0) then
+  if nDistance == 0 then
+    -- Do nothing, return successfully if we don't need to travel
+    return true
+  elseif nDistance < 0 then
     error("Invalid distance passed to dig(), distance must be a number greater than 0")
   end
 
@@ -162,23 +165,32 @@ end
 
 -- Dig out a room
 tunnel()
-tunnel("up", nHeight)
 for height = 1, nHeight do
   for width = 1, nWidth do
-    if (height == 1) and (width == 1) then
-      tunnel(nLength)
-    else
-      tunnel(nLength - 1)
-    end
+    tunnel(nLength - 1)
 
     -- Get in position to dig out next column
     if width ~= nWidth then
       -- Move in a zig-zag patter while digging
-      if width % 2 == 1 then
+      if width % 2 == 1 and height % 2 == 0 then
+        turtle.turnLeft()
+        tunnel()
+        turtle.turnLeft()
+      end
+
+      if width % 2 == 0 and height % 2 == 0 then
         turtle.turnRight()
         tunnel()
         turtle.turnRight()
-      else
+      end
+
+      if width % 2 == 1 and height % 2 == 1 then
+        turtle.turnRight()
+        tunnel()
+        turtle.turnRight()
+      end
+
+      if width % 2 == 0 and height % 2 == 1 then
         turtle.turnLeft()
         tunnel()
         turtle.turnLeft()
@@ -195,3 +207,30 @@ for height = 1, nHeight do
 end -- height
 
 print("Finished digging out ", nLength, "x", nWidth, "x", nHeight, " room.")
+
+print("Returning to starting position...")
+
+-- Return to the floor
+tunnel("down", nHeight - 1)
+
+if nWidth % 2 == 0 and nHeight % 2 == 0 then
+  tunnel()
+end
+
+if nWidth % 2 == 1 and nHeight % 2 == 0 then
+  tunnel()
+end
+
+if nWidth % 2 == 0 and nHeight % 2 == 1 then
+  turtle.turnRight()
+  tunnel(nWidth - 1)
+  turtle.turnLeft()
+  tunnel()
+end
+
+if nWidth % 2 == 1 and nHeight % 2 == 1 then
+  turtle.turnLeft()
+  tunnel(nWidth - 1)
+  turtle.turnLeft()
+  tunnel()
+end
