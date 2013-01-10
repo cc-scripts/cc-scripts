@@ -72,8 +72,6 @@ do
 	end)
 
 	t.moveAlong = directionTaker(function(dir)
-		if not dir then return false end
-
 		if dir == direction.up then
 			return t.up()
 		elseif dir == direction.down then
@@ -87,8 +85,6 @@ do
 		end
 	end)
 	t.digAlong = directionTaker(function(dir)
-		if not dir then return false end
-
 		if dir == direction.up then
 			return t.digUp()
 		elseif dir == direction.down then
@@ -99,8 +95,6 @@ do
 		end
 	end)
 	t.attackAlong = directionTaker(function(dir)
-		if not dir then return false end
-
 		if dir == direction.up then
 			return t.attackUp()
 		elseif dir == direction.down then
@@ -111,8 +105,6 @@ do
 		end
 	end)
 	t.detectAlong = directionTaker(function(dir)
-		if not dir then return false end
-
 		if dir == direction.up then
 			return t.detectUp()
 		elseif dir == direction.down then
