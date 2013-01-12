@@ -195,15 +195,15 @@ for height = 1, nHeight do
       if height % 2 == 0 then
         if width % 2 == 1 then
           if nWidth % 2 == 0 then
-            loopRight()
-          else
             loopLeft()
+          else
+            loopRight()
           end
         else
           if nWidth % 2 == 0 then
-            loopLeft()
-          else
             loopRight()
+          else
+            loopLeft()
           end
         end
       end
