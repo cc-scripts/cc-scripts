@@ -163,6 +163,18 @@ function tunnel(...)
   return bSuccess
 end
 
+function loopLeft()
+  turtle.turnLeft()
+  tunnel()
+  turtle.turnLeft()
+end
+
+function loopRight()
+  turtle.turnRight()
+  tunnel()
+  turtle.turnRight()
+end
+
 -- Dig out a room
 tunnel()
 for height = 1, nHeight do
@@ -172,27 +184,27 @@ for height = 1, nHeight do
     -- Get in position to dig out next column
     if width ~= nWidth then
       -- Move in a zig-zag pattern while digging
-      if height % 2 == 0 then
-        if width % 2 == 0 then
-          turtle.turnLeft()
-          tunnel()
-          turtle.turnLeft()
+      if height % 2 == 1 then
+        if width % 2 == 1 then
+          loopRight()
         else
-          turtle.turnRight()
-          tunnel()
-          turtle.turnRight()
+          loopLeft()
         end
       end
 
-      if height % 2 == 1 then
-        if width % 2 == 0 then
-          turtle.turnLeft()
-          tunnel()
-          turtle.turnLeft()
+      if height % 2 == 0 then
+        if width % 2 == 1 then
+          if nWidth % 2 == 0 then
+            loopRight()
+          else
+            loopLeft()
+          end
         else
-          turtle.turnRight()
-          tunnel()
-          turtle.turnRight()
+          if nWidth % 2 == 0 then
+            loopLeft()
+          else
+            loopRight()
+          end
         end
       end
     end
