@@ -18,6 +18,10 @@ end
 -- Build the module to export
 local cc_scripts = {}
 
+-- Configure directions - set by startup script, defined by bootloader
+cc_scripts.webRoot = nil
+cc_scripts.installRoot = nil
+
 -- String/table duality on the version
 cc_scripts.version = setmetatable({
 	major = 0,
@@ -27,8 +31,15 @@ cc_scripts.version = setmetatable({
 }, {__tostring = stringifyVersion})
 
 -- Api management
+cc_scripts.api = {}
 do
 	local _apis = {}
+	function cc_scripts.api.path(name)
+		return cc_scripts.installRoot.."apis/"..name
+	end
+	function cc_scripts.api.webPath(name)
+		return cc_scripts.webRoot.."apis/"..name..'.lua'
+	end
 
 	local __tostring = function(api)
 		return ("<api '%s'>"):format(api.__name)
@@ -61,5 +72,17 @@ do
 		return _apis[name]
 	end
 end
+
+-- programs
+cc_scripts.program = {}
+do
+	function cc_scripts.program.path(name)
+		return cc_scripts.installRoot.."programs/"..name
+	end
+	function cc_scripts.program.webPath(name)
+		return cc_scripts.webRoot.."programs/"..name..'.lua'
+	end
+end
+
 
 return cc_scripts
