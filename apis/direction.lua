@@ -1,17 +1,19 @@
+-- get and patch the vector metatable
 local vmt = getmetatable(vector.new(0, 0, 0))
-
-for k, v in pairs(vmt) do
-	module[k] = v
-end
-
-__tostring = function(self)
-	return ("%s (%s)"):format(self.name, vmt.__tostring(self))
-end
-
 vmt.__eq = function(a, b)
 	return a.x == b.x and a.y == b.y and a.z == b.z
 end
 
+-- copy that metatable to direction
+local direction = {}
+for k, v in pairs(vmt) do
+	direction[k] = v
+end
+direction.__tostring = function(self)
+	return ("%s (%s)"):format(self.name, vmt.__tostring(self))
+end
+
+-- declare and process cardinal directions
 local dirs = {
 	north = vector.new( 1,  0,  0),
 	east  = vector.new( 0,  0,  1),
@@ -20,36 +22,34 @@ local dirs = {
 	up    = vector.new( 0,  1,  0),
 	down  = vector.new( 0, -1,  0)
 }
-
-
 for name, dir in pairs(dirs) do
 	dir.name = name
-	setmetatable(dir, module)
-	module[name] = dir
+	setmetatable(dir, direction)
+	direction[name] = dir
 end
 
-leftOf = {
-	[north] = west,
-	[east ] = north,
-	[south] = east,
-	[west ] = south
+direction.leftOf = {
+	[direction.north] = direction.west,
+	[direction.east ] = direction.north,
+	[direction.south] = direction.east,
+	[direction.west ] = direction.south
 }
 
-rightOf = {
-	[north] = east,
-	[east ] = south,
-	[south] = west,
-	[west ] = north
+direction.rightOf = {
+	[direction.north] = direction.east,
+	[direction.east ] = direction.south,
+	[direction.south] = direction.west,
+	[direction.west ] = direction.north
 }
 
-behind = {
-	[north] = south,
-	[east ] = west,
-	[south] = north,
-	[west ] = east
+direction.behind = {
+	[direction.north] = direction.south,
+	[direction.east ] = direction.west,
+	[direction.south] = direction.north,
+	[direction.west ] = direction.east
 }
 
-fromCompassPoint = function(s)
+function direction.fromCompassPoint(s)
 	if s == 'n' or s == 'north' then
 		return north
 	elseif s == 's' or s == 'south' then
@@ -61,7 +61,7 @@ fromCompassPoint = function(s)
 	end
 end
 
-along = function(v)
+function direction.along(v)
 	local ax = math.abs(v.x)
 	local ay = math.abs(v.y)
 	local az = math.abs(v.z)
@@ -76,3 +76,5 @@ along = function(v)
 		return v.z > 0 and east or west
 	end
 end
+
+return direction

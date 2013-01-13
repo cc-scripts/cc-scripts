@@ -15,16 +15,36 @@ local function stringifyVersion(v)
 	end
 end
 
+-- Build the module to export
+local cc_scripts = {}
+
 -- String/table duality on the version
-version = setmetatable({
+cc_scripts.version = setmetatable({
 	major = 0,
 	minor = 0,
 	patch = 1,
 	identifier = ""
 }, {__tostring = stringifyVersion})
 
+-- Api management
+do
+	local _apis = {}
 
-
-function loadAPI(name)
-	os.loadAPI("/cc-scripts/apis/" .. name)
+	-- return the API with a certain name
+	cc_scripts.loadAPI = function(name)
+		local localPath = "/cc-scripts/apis/"..name
+		if __ccsForceReload or not fs.exists(localPath) then
+			-- Get the file from the server
+			-- ...
+		end
+		if not _apis[name] then
+			-- Api not yet loaded - execute it
+			local api = dofile(localPath) or {}
+			-- Cache it
+			_apis[name] = api
+		end
+		return _apis[name]
+	end
 end
+
+return cc_scripts

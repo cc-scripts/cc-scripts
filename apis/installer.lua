@@ -1,6 +1,7 @@
 -- API: installer
 -- Source: /cc-scripts/apis/installer.lua
 -- Description: An API for installing and updating files.
+local installer = {}
 
 -- The following are utility functions for use within this API;
 -- these functions are inaccessible outside of this file.
@@ -32,7 +33,7 @@ end
 --   1. A file path (/some/path/to/file)
 --   2. A HTTP URL: (http://yoursite.com/path/to/file)
 --   3. A HTTPS URL: (https://yoursite.com/path/to/file)
-function install(source, destination, force)
+function installer.install(source, destination, force)
   local fromUrl = isUrl(source)
 
   -- If we're installing from a URL, ensure the HTTP API is available,
@@ -78,3 +79,5 @@ function install(source, destination, force)
 
   return true
 end
+
+return installer

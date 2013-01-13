@@ -6,6 +6,9 @@ Usage:
   direction
   direction <n[orth]|e[ast]|s[outh]|w[est]|up|down>
 ]]
+local direction = cc_scripts.loadAPI('direction')
+cc_scripts.loadAPI('turtletracker')
+
 local args = {...}
 if #args == 1 then
 	dir = direction.fromCompassPoint(args[1])
