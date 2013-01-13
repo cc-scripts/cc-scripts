@@ -51,13 +51,13 @@ direction.behind = {
 
 function direction.fromCompassPoint(s)
 	if s == 'n' or s == 'north' then
-		return north
+		return direction.north
 	elseif s == 's' or s == 'south' then
-		return south
+		return direction.south
 	elseif s == 'e' or s == 'east' then
-		return east
+		return direction.east
 	elseif s == 'w' or s == 'west' then
-		return west
+		return direction.west
 	end
 end
 
@@ -69,11 +69,11 @@ function direction.along(v)
 	if ax == 0 and az == 0 and ay == 0 then
 		return nil
 	elseif ay >= az and ay >= ax then
-		return v.y > 0 and up or down
+		return v.y > 0 and direction.up or direction.down
 	elseif ax >= az then
-		return v.x > 0 and north or south
+		return v.x > 0 and direction.north or direction.south
 	else
-		return v.z > 0 and east or west
+		return v.z > 0 and direction.east or direction.west
 	end
 end
 
