@@ -5,12 +5,14 @@
 -- First thing's first: save the installer to root of the current
 -- computer. We want the user to be able to resume this process
 -- if the install fails.
+local repoUrl = "https://raw.github.com/damien/cc-scripts/master/"
+
 fs.makeDir("/cc-scripts")
 bootstrap = fs.open("/cc-scripts/bootstrap", "w")
-bootstrapConnection = http.get("https://raw.github.com/damien/cc-scripts/master/bootstrap.lua")
+bootstrapConnection = http.get(repoUrl .. "bootstrap.lua")
 
 assert(bootstrap, "Unable to save installer to disk! Please make sure your in-game computer has space available and try again!")
-assert(bootstrapConnection, "Unable to download installer components! Is your internet working? See if you can access https://raw.github.com/damien/cc-scripts/master/bootstrap.lua")
+assert(bootstrapConnection, "Unable to download installer components! Is your internet working? See if you can access "..repoUrl.."bootstrap.lua")
 
 bootstrap.write(bootstrapConnection.readAll())
 bootstrapConnection.close()
@@ -70,12 +72,12 @@ end
 -- This is pretty much just a selective copy from the latest
 -- code on Github.
 function install(path)
-  local url = "https://raw.github.com/damien/cc-scripts/master/" .. path .. ".lua"
+  local url = repoUrl  .. path .. ".lua"
   local installPath = "/cc-scripts/" .. path
   local updated = fs.exists(installPath)
 
   print("Downloading " .. path .. " ...")
-  local conn = http.get("https://raw.github.com/damien/cc-scripts/master/" .. path .. ".lua")
+  local conn = http.get(repoUrl .. path .. ".lua")
   local file = fs.open(installPath, "w")
 
   assert(conn, "Unable to download " .. path .. " - aborting!")
