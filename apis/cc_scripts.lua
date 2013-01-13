@@ -30,6 +30,23 @@ cc_scripts.version = setmetatable({
 	identifier = ""
 }, {__tostring = stringifyVersion})
 
+-- Download a file
+function cc_scripts.download(from, to)
+	if not http then error("No HTTP API") end
+	local conn = http.get(from)
+	if conn then
+		local file = fs.open(to, "w")
+		if file then
+			file.write(conn.readAll())
+			file.close()
+		end
+		conn.close()
+		if not file then
+			error(("Could not create destination file %q"):format(to))
+		end
+	else error(("Could not reach %q"):format(from)) end
+end
+
 -- Api management
 cc_scripts.api = {}
 do
@@ -47,10 +64,12 @@ do
 
 	-- return the API with a certain name
 	cc_scripts.loadAPI = function(name)
-		local localPath = "/cc-scripts/apis/"..name
+		local localPath = cc_scripts.api.path(name)
 		if __ccsForceReload or not fs.exists(localPath) then
 			-- Get the file from the server
-			-- ...
+			local webPath = cc_scripts.api.webPath(name)
+			print(("Downloading api %q..."):format(name))
+			cc_scripts.download(webPath, localPath)
 		end
 		if not _apis[name] then
 			-- Api not yet loaded - execute it
