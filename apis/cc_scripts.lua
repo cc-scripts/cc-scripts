@@ -63,7 +63,7 @@ do
 	end
 
 	-- return the API with a certain name
-	cc_scripts.loadAPI = function(name)
+	cc_scripts.api.load = function(name)
 		local localPath = cc_scripts.api.path(name)
 		if __ccsForceReload or not fs.exists(localPath) then
 			-- Get the file from the server
