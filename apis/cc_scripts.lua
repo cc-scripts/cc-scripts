@@ -30,6 +30,10 @@ cc_scripts.version = setmetatable({
 do
 	local _apis = {}
 
+	local __tostring = function(api)
+		return ("<api '%s'>"):format(api.__name)
+	end
+
 	-- return the API with a certain name
 	cc_scripts.loadAPI = function(name)
 		local localPath = "/cc-scripts/apis/"..name
@@ -40,6 +44,17 @@ do
 		if not _apis[name] then
 			-- Api not yet loaded - execute it
 			local api = dofile(localPath) or {}
+
+			-- And wrap it to make it stringify
+			local mt = getmetatable(api)
+			if not mt then
+				api.__name = name
+				setmetatable(api, {__tostring = __tostring})
+			elseif not mt.__tostring then
+				api.__name = name
+				mt.__tostring = __tostring
+			end
+
 			-- Cache it
 			_apis[name] = api
 		end
