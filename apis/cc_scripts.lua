@@ -6,22 +6,22 @@
 -- This is where we set the current version of cc-scripts in use.
 -- Reference: http://semver.org/
 local VERSION = {
-  major = 0,
-  minor = 0,
-  patch = 1,
-  identifier = ""
+	major = 0,
+	minor = 0,
+	patch = 1,
+	identifier = ""
 }
 
 function version()
-  return VERSION
+	return VERSION
 end
 
 function versionString()
-  local string = VERSION.major .. "." .. VERSION.minor .. "." .. VERSION.patch
-  if VERSION.identifier ~= "" then string = string .. "-" .. identifier end
-  return string
+	local string = VERSION.major .. "." .. VERSION.minor .. "." .. VERSION.patch
+	if VERSION.identifier ~= "" then string = string .. "-" .. identifier end
+	return string
 end
 
 function loadAPI(name)
-  os.loadAPI("/cc-scripts/apis/" .. name)
+	os.loadAPI("/cc-scripts/apis/" .. name)
 end
