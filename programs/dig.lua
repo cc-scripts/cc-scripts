@@ -9,6 +9,8 @@ Usage:
   dig to <x> <y> <z>
 ]]
 
+cc_scripts.loadAPI('turtletracker')
+
 local args = {...}
 if #args == 1 then
 	turtle.digAlong(args[1])

@@ -1,9 +1,7 @@
 -- Name: ccs
 -- Source: /cc-scripts/programs/ccs.lua
 -- A script to manage cc-script packages.
-
-cc_scripts.loadAPI("installer")
-assert(installer, "Unable to load installer")
+local installer = cc_scripts.loadAPI("installer")
 
 local tArgs = { ... }
 
