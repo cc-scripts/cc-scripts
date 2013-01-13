@@ -9,7 +9,7 @@ Usage:
   dig to <x> <y> <z>
 ]]
 
-cc_scripts.loadAPI('turtletracker')
+cc_scripts.api.load('turtletracker')
 
 local args = {...}
 if #args == 1 then

@@ -3,7 +3,7 @@ This module monkeypatches the turtle API to include dead-reckoning - every move
 command will update t.position or turtle.location
 ]]
 
-local direction = cc_script.loadAPI('direction')
+local direction = cc_scripts.api.load('direction')
 
 local t = turtle
 t.position = vector.new(0, 0, 0)

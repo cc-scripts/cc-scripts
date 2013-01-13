@@ -6,8 +6,8 @@ Usage:
   direction
   direction <n[orth]|e[ast]|s[outh]|w[est]|up|down>
 ]]
-local direction = cc_scripts.loadAPI('direction')
-cc_scripts.loadAPI('turtletracker')
+cc_scripts.api.load('turtletracker')
+local direction = cc_scripts.api.load('direction')
 
 local args = {...}
 if #args == 1 then
