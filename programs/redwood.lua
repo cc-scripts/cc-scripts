@@ -48,10 +48,10 @@ local h = 0
 
 -- go up
 while true do
-	if turtle.detect() and not items:is('leaves') then
+	if turtle.detect() then
 		turtle.dig()
 	end
-	if turtle.detectUp() and not items:is('leaves', 'up')then
+	if turtle.detectUp() then
 		turtle.digUp()
 		turtle.up()
 	else
@@ -75,7 +75,7 @@ while h > 0 do
 		turtle.digDown()
 	end
 	turtle.down()
-	if turtle.detect() and not items:is('leaves') then
+	if turtle.detect() then
 		turtle.dig()
 	end
 	tryRefuel()
@@ -85,7 +85,7 @@ end
 turtle.back()
 turtle.turnRight()
 turtle.back()
-items:drop('log', 'down')
+items:dropDown('log')
 turtle.forward()
 turtle.forward()
 turtle.turnLeft()
