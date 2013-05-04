@@ -4,43 +4,35 @@ command will update t.position or turtle.location
 ]]
 
 local direction = cc_scripts.api.load('direction')
+local patcher = cc_scripts.api.load('turtlepatcher')
 
 local t = turtle
 t.position = vector.new(0, 0, 0)
 t.orientation = direction.north
 
--- Wrap all functions to keep track of any state they change
+-- Patch all functions to keep track of any state they change
 do
-	-- Returns a wrapped function that calls a handler with the result
-	-- before returning
-	local intercept = function(f, oninvoked)
-	    return function(...)
-	        local ret = f(...)
-	        oninvoked(ret, ...)
-	        return ret
-	    end
-	end
-	t.forward = intercept(t.forward, function(success)
+	patcher.forward.after = function(success)
 		if success then t.position = t.position + t.orientation end
-	end)
-	t.back = intercept(t.back, function(success)
+	end
+	patcher.back.after = function(success)
 		if success then t.position = t.position - t.orientation end
-	end)
-	t.up = intercept(t.up, function(success)
+	end
+	patcher.up.after = function(success)
 		if success then t.position = t.position + direction.up end
-	end)
-	t.down = intercept(t.down, function(success)
+	end
+	patcher.down.after = function(success)
 		if success then	t.position = t.position + direction.down end
-	end)
-	t.turnLeft = intercept(t.turnLeft, function(success)
+	end
+	patcher.turnLeft.after = function(success)
 		if success then t.orientation = direction.leftOf[t.orientation] end
-	end)
-	t.turnRight = intercept(t.turnRight, function(success)
+	end
+	patcher.turnRight.after = function(success)
 		if success then t.orientation = direction.rightOf[t.orientation] end
-	end)
-	t.select = intercept(t.select, function(_, slot)
+	end
+	patcher.select.after = function(_, slot)
 		t.slot = slot
-	end)
+	end
 end
 
 -- Functions taking absolute directions
