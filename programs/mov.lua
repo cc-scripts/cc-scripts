@@ -7,6 +7,7 @@ Usage:
   move <n[orth]|e[ast]|s[outh]|w[est]|up|down>
   move to <x> <y> <z>
 ]]
+cc_scripts.api.load('turtletracker')
 
 local args = {...}
 if #args == 1 then

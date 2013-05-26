@@ -2,6 +2,8 @@
 -- Source: /cc-scripts/apis/funct.lua
 -- Description: A collection of useful helpers for dealing with functions.
 
+
+local funct = {}
 -- Coerce all arguments into an array
 --
 -- Useful if you're dealing with functions that give
@@ -23,7 +25,7 @@
 -- See also: http://www.emmanueloga.com/2010/12/09/lua-select.html
 --
 -- Returns a Array.
-function collect(...)
+function funct.collect(...)
   return {...}
 end
 
@@ -45,7 +47,9 @@ end
 -- Returns an Array whos first value is a boolean
 -- indicating if an error occurred when executing
 -- the provided string.
-function exec(string)
+function funct.exec(string)
   local method = loadstring(string)
   return pcall(method)
 end
+
+return funct
