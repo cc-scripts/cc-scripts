@@ -13,8 +13,8 @@ if #args == 1 then
 	turtle.moveAlong(args[1])
 elseif args[1] == 'to' then
 	turtle.moveTo(
-		tonumber(args[1]),
 		tonumber(args[2]),
-		tonumber(args[3])
+		tonumber(args[3]),
+		tonumber(args[4])
 	)
 end
