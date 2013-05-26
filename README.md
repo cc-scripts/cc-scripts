@@ -11,16 +11,16 @@ assembled and thoughtfully documented Lua scripts for use within the excellent
 Installation
 ============
 
-0. Open the Lua interpreter on your in-game computer: `lua`
+1. Open the Lua interpreter on your in-game computer: `lua`
 
-0. Ensure your server has the HTTP API enabled. You can test it with this code snippet:
+2. Ensure your server has the HTTP API enabled. You can test it with this code snippet:
    `assert(http, "No HTTP for you!")`  
    __If your server doesn't have the HTTP API enabled, have an admin check the ComputerCraft configuration files and enable it from there.__
 
-0. Enter the following snippet to download the installation:
-`loadstring(http.get("https://raw.github.com/damien/cc-scripts/master/bootstrap.lua").readAll())()`
+3. Enter the following snippet to download the installation:
+`loadstring(http.get("https://raw.github.com/damien/cc-scripts/master/bootstrap.lua").readAll())(exit)`
 
-0. Follow the instructions given by the installer and you should be good to go!
+4. Follow the instructions given by the installer and you should be good to go!
 
 Issues
 ======
