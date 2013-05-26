@@ -5,23 +5,26 @@
 
 -- This is where we set the current version of cc-scripts in use.
 -- Reference: http://semver.org/
-local VERSION = {
-  major = 0,
-  minor = 0,
-  patch = 1,
-  identifier = ""
-}
 
-function version()
-  return VERSION
+-- Take a version table and stringify it
+local function stringifyVersion(v)
+	if v.identifier and v.identifier ~= "" then
+		return ("%s.%s.%s-%s"):format(v.major, v.minor, v.patch, v.identifier)
+	else
+		return ("%s.%s.%s"):format(v.major, v.minor, v.patch)
+	end
 end
 
-function versionString()
-  local string = VERSION.major .. "." .. VERSION.minor .. "." .. VERSION.patch
-  if VERSION.identifier ~= "" then string = string .. "-" .. identifier end
-  return string
-end
+-- String/table duality on the version
+version = setmetatable({
+	major = 0,
+	minor = 0,
+	patch = 1,
+	identifier = ""
+}, {__tostring = stringifyVersion})
+
+
 
 function loadAPI(name)
-  os.loadAPI("/cc-scripts/apis/" .. name)
+	os.loadAPI("/cc-scripts/apis/" .. name)
 end
