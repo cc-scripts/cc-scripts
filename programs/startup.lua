@@ -15,4 +15,4 @@ shell.setPath(path .. ":/cc-scripts/programs")
 os.loadAPI("/cc-scripts/apis/cc_scripts")
 
 -- Print the version of cc-scripts in use on startup
-print("cc-scripts v" .. cc_scripts.versionString())
+print("cc-scripts v" .. tostring(cc_scripts.version))
