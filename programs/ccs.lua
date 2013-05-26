@@ -2,12 +2,15 @@
 -- Source: /cc-scripts/programs/ccs.lua
 -- A script to manage cc-script packages.
 
-cc_scripts.loadAPI("installer")
-assert(installer, "Unable to load installer")
+-- update | install
+local subCommand = select(1, ...)
+-- api | program
+local codeType = select(2, ...)
+-- {"room", "dig", ...}
+local names = {select(3, ...)}
 
-local tArgs = { ... }
-
-if #tArgs == 0 then
+if not subCommand or codeType and #names == 0 or
+   (codeType and codeType ~= "program" and codeType ~= "api") then
   print("Usage: ccs update [[api|program] NAME]")
   print()
   print("Examples:")
@@ -28,27 +31,24 @@ if #tArgs == 0 then
   print()
 end
 
--- Pull a script down from the cc-scripts repository and put it on the local computer.
-function install(path, force)
-  local url = "https://raw.github.com/damien/cc-scripts/master/" .. path .. ".lua"
-  local installPath = "/cc-scripts/" .. path
-  return installer.install(url, installPath, force)
-end
-
 -- Update one or more named programs or apis
-function update(updateArguments)
-  local path = ""
-
-  if updateArguments[1] == "api" then
-    path = "apis/"
-  elseif updateArguments[1] == "program" then
-    path = "programs/"
-  end
-
-  -- Update each named api or program
-  for i = 2, #updateArguments do
-    install(path .. updateArguments[i], true)
-    print("Updated " .. updateArguments[i])
+function update(codeType, names)
+  if codeType == "api" then
+    for _, api in ipairs(names) do
+      cc_scripts.download(
+        cc_scripts.api.webPath(api),
+        cc_scripts.api.path(api)
+      )
+      print("Updated " .. api)
+    end
+  elseif codeType == "program" then
+    for _, program in ipairs(names) do
+      cc_scripts.download(
+        cc_scripts.program.webPath(program),
+        cc_scripts.program.path(program)
+      )
+      print("Updated " .. program)
+    end
   end
 end
 
@@ -58,60 +58,47 @@ function updateAll()
   local programs = fs.list("/cc-scripts/programs")
 
   for _, api in ipairs(apis) do
-    install("apis/" .. api, true)
+    cc_scripts.download(
+      cc_scripts.api.webPath(api),
+      cc_scripts.api.path(api)
+    )
   end
 
   for _, program in ipairs(programs) do
-    install("programs/" .. program, true)
+    cc_scripts.download(
+      cc_scripts.program.webPath(program),
+      cc_scripts.program.path(program)
+    )
   end
 
   print("Updated all programs and apis")
 end
 
--- ie: "update"
-local subCommand = tArgs[1]
-
--- ie: "program", "room"
-local subCommandArgs = {}
-
--- Stick all arguments after the first one into
--- the subCommandArgs table.
-if #tArgs > 1 then
-  for i = 2, #tArgs do
-    table.insert(subCommandArgs, tArgs[i])
-  end
-end
-
 -- "css update ..."
 if subCommand == "update" then
-  if #tArgs == 1 then
+  if not codeType then
     updateAll()
   else
-    update(subCommandArgs)
+    update(codeType, names)
   end
 end
 
 if subCommand == "install" then
-  if #subCommandArgs > 2 then
-    print("You may only install one item at a time.")
-    return
-  end
-
-  local path = ""
-  if subCommandArgs[1] == "api" then
-    path = "apis/"
-  elseif subCommandArgs[1] == "program" then
-    path = "programs/"
-  else
-    print("Invalid subcommand '" .. subCommandArgs[1] .. "'")
-    print("Valid subcommands are 'install' and 'update'")
-    return
-  end
-
-  if install(path .. subCommandArgs[2]) then
-    print("Successfully installed " .. subCommandArgs[2] .. " " .. subCommandArgs[1])
-  else
-    print(subCommandArgs[2] .. " " .. subCommandArgs[1] .. " is already installed!")
-    print("Try running: ccs update " .. subCommandArgs[1] .. " " .. subCommandArgs[2])
+  for _, name in ipairs(names) do
+    local path, webPath
+    if codeType == "api" then
+      webPath = cc_scripts.api.webPath(name)
+      path = cc_scripts.api.path(name)
+    elseif codeType == "program" then
+      webPath = cc_scripts.program.webPath(name)
+      path = cc_scripts.program.path(name)
+    end
+    if fs.exists(path) then
+      print(("%s %q is already installed!"):format(codeType, name))
+      print(("Try running: ccs update %s %s"):format(codeType, name))
+    else
+      cc_scripts.download(webPath, path)
+      print(("Successfully installed %s %q"):format(codeType, name))
+    end
   end
 end
