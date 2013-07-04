@@ -5,7 +5,7 @@
 -- First thing's first: save the installer to root of the current
 -- computer. We want the user to be able to resume this process
 -- if the install fails.
-local repoUrl = "https://raw.github.com/damien/cc-scripts/master/"
+local repoUrl = "https://raw.github.com/cc-scripts/cc-scripts/master/"
 local installRoot = "/cc-scripts/"
 local exit = (...) or function() end
 
