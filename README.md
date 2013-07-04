@@ -18,14 +18,14 @@ Installation
    __If your server doesn't have the HTTP API enabled, have an admin check the ComputerCraft configuration files and enable it from there.__
 
 3. Enter the following snippet to download the installation:
-`loadstring(http.get("https://raw.github.com/damien/cc-scripts/master/bootstrap.lua").readAll())(exit)`
+`loadstring(http.get("https://raw.github.com/cc-scripts/cc-scripts/master/bootstrap.lua").readAll())(exit)`
 
 4. Follow the instructions given by the installer and you should be good to go!
 
 Issues
 ======
 
-Report any and all problems at the the [cc-scripts Github Issues](https://github.com/damien/cc-scripts/issues) page: https://github.com/damien/cc-scripts/issues
+Report any and all problems at the the [cc-scripts Github Issues](https://github.com/cc-scripts/cc-scripts/issues) page: https://github.com/damien/cc-scripts/issues
 
 Contributing
 ============
@@ -39,7 +39,7 @@ __For those of you who aren't familiar with Github__, you can do the following:
    make sure you're not submitting something we already have unless you feel
    it's a drastic improvement to what's there already!
 0. Upload your Lua code as a [Gist](https://gist.github.com/)
-0. [Create a new issue here](https://github.com/damien/cc-scripts/issues),
+0. [Create a new issue here](https://github.com/cc-scripts/cc-scripts/issues),
    be sure to include a link to the Gist you created!
 0. That's it! Be prepared for some dialogue; you may be asked to make changes
    before your scripts are accepted!
